@@ -1,0 +1,74 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+<!-- 
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../plugins/ekko-lightbox/ekko-lightbox.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> -->
+{% block content %}
+    <section class="content pb-3 col-md-6 pt-2">
+      <div class="container-fluid h-100">
+        {% for i in orders %}
+        <div class="card card-row card-secondary">
+          <div class="card-header d-flex">
+            <h3 class="card-title">
+                    Номер заказа #{{i.id}}
+            </h3>
+            <button onclick="history.back()" class=" p-1 btn btn-xs btn-primary ml-auto">Назад</button>
+          </div>
+          <div class="card-body">
+            <div class="card card-light card-outline">
+              <div class="card-header">
+                <h4 class="card-title">{{i.costumer}}</h4>
+                <div class="card-tools">
+                  <a style="font-size: large;" href="tel:{{i.phone}}" class="btn btn-tool btn-link">{{i.phone}}</a>
+                  <a href="#" class="btn btn-tool">
+                    <!-- <i class="fas fa-pen"></i> -->
+                  </a>
+                </div>
+
+              </div>
+              <div class="card-body">
+                <p>
+                  {{i.cart|safe}}
+                </p>
+                <p>
+                    <b>Адрес:</b> <a href="{{i.address}}">{{i.address_text}}</a>
+                </p>
+                <p>
+                    <b>Время заказа:</b> {{i.created_at|date:"d-m-Y H:i"}}
+                </p>
+                <p>
+                    <b>Филиал:</b> {{i.fillial}}
+                </p>
+                <p>
+                    <b>Итого:</b> {{i.all_price}} сум
+                </p>
+              </div>
+              <div class="card-body ">
+                <a href="{% url 'update_order' pk=i.id status='confirm' %}" class="btn btn-xs btn-success">Принят</a>
+                <a href="{% url 'update_order' pk=i.id status='deny' %}" class="btn btn-xs btn-danger">Отказ</a>
+              </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+      </div>
+    </section>
+
+
+{% endblock %}
+{% block javascript %}
+<!-- Ekko Lightbox -->
+<script src="/static/dashboard/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/static/dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+<!-- Filterizr-->
+<script src="/static/dashboard/plugins/filterizr/jquery.filterizr.min.js"></script>
+<script>
+  $(function () {
+
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,279 @@
+{% load static %}
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <ul class="navbar-nav">
+   
+    <li class="nav-item">
+
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
+      
+      <a href="{% url 'dashboard' %}" class="nav-link">Главный
+      </a>
+    </li>
+  </ul>
+  {% if map_active %}
+  <ul class="navbar-nav">
+            <div class="input-group">
+              <button type="button" class="btn btn-default float-right" id="daterange-btn">
+                <i class="far fa-calendar-alt"></i> Фильтр
+                <i class="fas fa-caret-down"></i>
+              </button>
+          </div>
+  </ul>
+  {% endif %}
+</nav>
+  
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+  <a href="{% url 'dashboard' %}" class="brand-link">
+    <img src="{% static 'dashboard/img/' %}" alt="Rasm" class="brand-image img-circle elevation-3" >
+    <span class="brand-text font-weight-light">Code</span>
+  </a>
+
+  <div class="sidebar">
+
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{% static 'dashboard/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="{% url 'dashboard' %}" class="d-block">{{ user.username }}</a>
+      </div>
+    </div>
+
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+         </li>
+         <li class="nav-item {{kassir_active}}">
+           {% if 'cashier' in access_types or user.is_superuser %}
+          <a href="{% url 'dashboard' %}" class="nav-link">
+            <i class="nav-icon fas fa-desktop"></i>
+            <p>Кассa</p>
+          </a>
+          {% else %}
+          <a href="" class="nav-link disabled">
+            <i class="nav-icon fas fa-desktop"></i>
+            <p>Кассиa</p>
+          </a>
+          {% endif %}
+        </li>
+         <li class="nav-item {{order_active}}">
+           {% if 'order' in access_types or user.is_superuser %}
+          <a href="{% url 'orders' %}" class="nav-link">
+            <i class="nav-icon far fa-clipboard"></i>
+            <p>Заказы</p>
+          </a>
+          {% else %}
+          <a href="" class="nav-link disabled">
+            <i class="nav-icon far fa-clipboard"></i>
+            <p>Заказы</p>
+          </a>
+          {% endif %}
+        </li>
+         <li class="nav-item {{history_active}}">
+           {% if 'history' in access_types or user.is_superuser %}
+          <a href="{% url 'history' %}" class="nav-link">
+            <i class="nav-icon fas fa-history"></i>
+            <p>История заказов</p>
+          </a>
+          {% else %}
+          <a href="" class="nav-link disabled">
+            <i class="nav-icon fas fa-history"></i>
+            <p>История заказов</p>
+          </a>
+          {% endif %}
+        </li>
+
+
+        <li class="nav-item {{menu_active}}">
+          {% if 'menu' in access_types or user.is_superuser %}
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-mug-hot"></i>
+            <p>
+              Меню
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item ">
+              <a href="{% url 'category_list' %}" class="nav-link {{c_active}}">
+                <i class="nav-icon fas fa-hotdog"></i>
+                <p>Категория</p>
+              </a>
+            </li>
+            <li class="nav-item  ">
+              <a href="{% url 'subcategory_list' %}" class="nav-link {{s_active}}">
+                <i class="nav-icon fas fa-seedling"></i>
+                <p>Подкатегория</p>
+              </a>
+            </li>
+          </ul>
+          {% else %}
+          <a href="#" class="nav-link disabled">
+            <i class="nav-icon fas fa-mug-hot"></i>
+            <p>
+              Меню
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item ">
+              <a class="nav-link">
+                <i class="nav-icon fas fa-hotdog"></i>
+                <p>Категория</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">
+                <i class="nav-icon fas fa-seedling"></i>
+                <p>Подкатегория</p>
+              </a>
+            </li>
+          </ul>
+          {% endif %}
+        </li>
+
+
+         <li class="nav-item {{statistic_active}}">
+           {% if 'statistic' in access_types or user.is_superuser %}
+          <a href="{% url 'statistic' %}" class="nav-link ">
+            <i class="nav-icon fas fa-chart-bar"></i>
+            <p>Статистика</p>
+          </a>
+          {% else %}
+          <a  class="nav-link disabled">
+            <i class="nav-icon fas fa-chart-bar"></i>
+            <p>Статистика</p>
+          </a>
+          {% endif %}
+        </li>
+
+
+         <li class="nav-item {{map_active}}">
+           {% if 'map' in access_types or user.is_superuser %}
+          <a href="{% url 'maps' %}" class="nav-link">
+            <i class="nav-icon fas fa-map-marked-alt"></i>
+            <p>Карта</p>
+          </a>
+          {% else %}
+          <a class="nav-link disabled">
+            <i class="nav-icon fas fa-map-marked-alt"></i>
+            <p>Карта</p>
+          </a>
+          {% endif %}
+
+        </li>
+
+
+         <li class="nav-item {{ad_active}}">
+           {% if 'Ad' in access_types or user.is_superuser %}
+          <a href="{% url 'ads_list' %}" class="nav-link ">
+            <i class="nav-icon fas fa-mail-bulk"></i>
+            <p>Рассылки</p>
+          </a>
+          {% else %}
+          <a class="nav-link disabled">
+            <i class="nav-icon fas fa-mail-bulk"></i>
+            <p>Рассылки</p>
+          </a>
+          {% endif %}
+        </li>
+
+
+         <li class="nav-item {{fillial_active}}">
+           {% if 'fillial' in access_types or user.is_superuser %}
+          <a href="{% url 'fillials_list' %}" class="nav-link">
+            <i class="nav-icon fas fa-code-branch"></i>
+            <p>Филиалы</p>
+          </a>
+          {% else %}
+          <a class="nav-link disabled">
+            <i class="nav-icon fas fa-code-branch"></i>
+            <p>Филиалы</p>
+          </a>
+          {% endif %}
+        </li>
+
+
+         <li class="nav-item {{manager_active}}">
+           {% if 'users' in access_types or user.is_superuser %}
+          <a href="{% url 'get_users' %}" class="nav-link ">
+            <i class="nav-icon far fa-id-card"></i>
+            <p>Пользователи</p>
+          </a>
+          {% else %}
+          <a class="nav-link disabled">
+            <i class="nav-icon far fa-id-card"></i>
+            <p>Пользователи</p>
+          </a>
+          {% endif %}
+        </li>
+         <li class="nav-item {{follow_active}}">
+           {% if 'followers' in access_types or user.is_superuser %}
+          <a href="{% url 'users_list' %}" class="nav-link ">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>Подписчики</p>
+          </a>
+          {% else %}
+          <a  class="nav-link disabled ">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>Подписчики</p>
+          </a>
+          {% endif %}
+        </li>
+         
+        
+       <li class="nav-item {{settings_active}}">
+        {% if 'settings_bot' in access_types or user.is_superuser %}
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-mug-hot"></i>
+          <p>
+            Настройки бота
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item ">
+            <a href="{% url 'settings' %}" class="nav-link {{t_active}}">
+              <i class="nav-icon fas fa-hotdog"></i>
+              <p>Тексты ботов</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="{% url 'bot_settings' %}" class="nav-link {{n_active}}">
+              <i class="nav-icon fas fa-seedling"></i>
+              <p>Настройки бота</p>
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+      </li>
+      <li class="nav-item {{comment_active}}">
+        {% if 'comments' in access_types or user.is_superuser %}
+       <a href="{% url 'comments_list' %}" class="nav-link ">
+         <i class="nav-icon fas fa-comments"></i>
+         <p>Комментарии</p>
+       </a>
+       {% else %}
+       <a  class="nav-link disabled ">
+         <i class="nav-icon fas fa-comments"></i>
+         <p>Комментарии</p>
+       </a>
+       {% endif %}
+     </li>
+
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+            <!-- <i class="fa-sign-out"></i> -->
+            <p>Выйти</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</aside>
